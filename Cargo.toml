@@ -305,3 +305,8 @@ inherits = "release"
 lto = "fat"
 # https://doc.rust-lang.org/rustc/codegen-options/index.html#codegen-units
 codegen-units = 1
+
+# TODO: remove
+[patch.crates-io]
+libp2p = { version = "0.46.0", git = "https://github.com/melekes/rust-libp2p.git", branch = "anton/webrtc-transport" }
+multiaddr = { version = "0.14.0", git = "https://github.com/melekes/rust-multiaddr.git", branch = "anton/x-webrtc" }

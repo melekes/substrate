@@ -25,11 +25,40 @@ use libp2p::{
 		transport::{Boxed, OptionalTransport},
 		upgrade,
 	},
-	dns, identity, mplex, noise, tcp, websocket, PeerId, Transport,
+	dns, identity, mplex, noise, tcp, webrtc as webrtc_p2p, websocket, Multiaddr, PeerId,
+	Transport,
 };
 use std::{sync::Arc, time::Duration};
 
+use libp2p::multiaddr::Protocol;
+use std::net::SocketAddr;
+use webrtc::peer_connection::certificate::RTCCertificate;
+
 pub use self::bandwidth::BandwidthSinks;
+
+// TODO: implement Into<SocketAddr> for Multiaddr and remove this.
+fn multiaddr_to_socketaddr(addr: &Multiaddr) -> Option<SocketAddr> {
+	let mut iter = addr.iter();
+	let proto1 = iter.next()?;
+	let proto2 = iter.next()?;
+	let proto3 = iter.next()?;
+
+	for proto in iter {
+		match proto {
+			Protocol::P2p(_) => {}, /* Ignore a `/p2p/...` prefix of possibly outer protocols, */
+			// if present.
+			_ => return None,
+		}
+	}
+
+	match (proto1, proto2, proto3) {
+		(Protocol::Ip4(ip), Protocol::Udp(port), Protocol::XWebRTC(_)) =>
+			Some(SocketAddr::new(ip.into(), port)),
+		(Protocol::Ip6(ip), Protocol::Udp(port), Protocol::XWebRTC(_)) =>
+			Some(SocketAddr::new(ip.into(), port)),
+		_ => None,
+	}
+}
 
 /// Builds the transport that serves as a common ground for all connections.
 ///
@@ -46,11 +75,12 @@ pub use self::bandwidth::BandwidthSinks;
 ///
 /// Returns a `BandwidthSinks` object that allows querying the average bandwidth produced by all
 /// the connections spawned with this transport.
-pub fn build_transport(
+pub fn build_transport<'a>(
 	keypair: identity::Keypair,
 	memory_only: bool,
 	yamux_window_size: Option<u32>,
 	yamux_maximum_buffer_size: usize,
+	webrtc_listen_address: Option<Multiaddr>,
 ) -> (Boxed<(PeerId, StreamMuxerBox)>, Arc<BandwidthSinks>) {
 	// Build the base layer of the transport.
 	let transport = if !memory_only {
@@ -115,8 +145,22 @@ pub fn build_transport(
 		.upgrade(upgrade::Version::V1Lazy)
 		.authenticate(authentication_config)
 		.multiplex(multiplexing_config)
-		.timeout(Duration::from_secs(20))
-		.boxed();
+		.timeout(Duration::from_secs(20));
 
-	(transport, bandwidth)
+	if let Some(listen_addr) = webrtc_listen_address {
+		// TODO: make `cert` an argument
+		let kp = rcgen::KeyPair::generate(&rcgen::PKCS_ECDSA_P256_SHA256).expect("key pair");
+		let cert = RTCCertificate::from_key_pair(kp).expect("certificate");
+		let webrtc_transport =
+			futures::executor::block_on(webrtc_p2p::transport::WebRTCTransport::new(
+				cert,
+				keypair,
+				multiaddr_to_socketaddr(&listen_addr).unwrap(),
+			))
+			.unwrap();
+		// TODO: use or_transport
+		(webrtc_transport.boxed(), bandwidth)
+	} else {
+		(transport.boxed(), bandwidth)
+	}
 }
