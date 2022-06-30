@@ -353,6 +353,10 @@ where
 					config_mem,
 					params.network_config.yamux_window_size,
 					yamux_maximum_buffer_size,
+					webrtc_listen_address(
+						params.network_config.listen_addresses.iter(),
+						&params.network_config.transport,
+					),
 				)
 			};
 
@@ -2138,4 +2142,20 @@ fn ensure_addresses_consistent_with_transport<'a>(
 	}
 
 	Ok(())
+}
+
+/// Returns the first WebRTC [`Multiaddr`] or `None`, if there are no such addresses or memory-only
+/// transport is being used.
+fn webrtc_listen_address<'a>(
+	addresses: impl Iterator<Item = &'a Multiaddr>,
+	transport: &TransportConfig,
+) -> Option<Multiaddr> {
+	if matches!(transport, TransportConfig::MemoryOnly) {
+		None
+	} else {
+		return addresses
+			.filter(|x| x.iter().any(|y| matches!(y, libp2p::core::multiaddr::Protocol::WebRTC)))
+			.cloned()
+			.next()
+	}
 }

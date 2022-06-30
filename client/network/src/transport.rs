@@ -20,12 +20,14 @@ use libp2p::{
 	bandwidth,
 	core::{
 		self,
-		either::EitherTransport,
+		either::{EitherOutput, EitherTransport},
 		muxing::StreamMuxerBox,
 		transport::{Boxed, OptionalTransport},
 		upgrade,
 	},
-	dns, identity, mplex, noise, tcp, websocket, PeerId, Transport,
+	dns, identity, mplex, noise, tcp,
+	webrtc::tokio::Transport as WebRTCTransport,
+	websocket, Multiaddr, PeerId, Transport,
 };
 use std::{sync::Arc, time::Duration};
 
@@ -51,6 +53,7 @@ pub fn build_transport(
 	memory_only: bool,
 	yamux_window_size: Option<u32>,
 	yamux_maximum_buffer_size: usize,
+	webrtc_listen_address: Option<Multiaddr>,
 ) -> (Boxed<(PeerId, StreamMuxerBox)>, Arc<BandwidthSinks>) {
 	// Build the base layer of the transport.
 	let transport = if !memory_only {
@@ -116,8 +119,23 @@ pub fn build_transport(
 		.upgrade(upgrade::Version::V1Lazy)
 		.authenticate(authentication_config)
 		.multiplex(multiplexing_config)
-		.timeout(Duration::from_secs(20))
-		.boxed();
+		.timeout(Duration::from_secs(20));
 
-	(transport, bandwidth)
+	if let Some(listen_addr) = webrtc_listen_address {
+		let mut webrtc_transport = WebRTCTransport::new(keypair);
+		webrtc_transport.listen_on(listen_addr).expect("listen address is invalid");
+		(
+			Transport::map(webrtc_transport.or_transport(transport), |t, _| {
+				let (peer_id, conn) = match t {
+					EitherOutput::First((peer_id, conn)) => (peer_id, EitherOutput::First(conn)),
+					EitherOutput::Second((peer_id, conn)) => (peer_id, EitherOutput::Second(conn)),
+				};
+				(peer_id, StreamMuxerBox::new(conn))
+			})
+			.boxed(),
+			bandwidth,
+		)
+	} else {
+		(transport.boxed(), bandwidth)
+	}
 }
