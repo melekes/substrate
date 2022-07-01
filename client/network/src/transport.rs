@@ -20,7 +20,7 @@ use libp2p::{
 	bandwidth,
 	core::{
 		self,
-		either::EitherTransport,
+		either::{EitherOutput, EitherTransport},
 		muxing::StreamMuxerBox,
 		transport::{Boxed, OptionalTransport},
 		upgrade,
@@ -158,8 +158,17 @@ pub fn build_transport<'a>(
 				multiaddr_to_socketaddr(&listen_addr).unwrap(),
 			))
 			.unwrap();
-		// TODO: use or_transport
-		(webrtc_transport.boxed(), bandwidth)
+		(
+			Transport::map(transport.or_transport(webrtc_transport), |t, _| {
+				let (peer_id, conn) = match t {
+					EitherOutput::First((peer_id, conn)) => (peer_id, EitherOutput::First(conn)),
+					EitherOutput::Second((peer_id, conn)) => (peer_id, EitherOutput::Second(conn)),
+				};
+				(peer_id, StreamMuxerBox::new(conn))
+			})
+			.boxed(),
+			bandwidth,
+		)
 	} else {
 		(transport.boxed(), bandwidth)
 	}
