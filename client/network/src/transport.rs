@@ -159,7 +159,7 @@ pub fn build_transport<'a>(
 			))
 			.unwrap();
 		(
-			Transport::map(transport.or_transport(webrtc_transport), |t, _| {
+			Transport::map(webrtc_transport.or_transport(transport), |t, _| {
 				let (peer_id, conn) = match t {
 					EitherOutput::First((peer_id, conn)) => (peer_id, EitherOutput::First(conn)),
 					EitherOutput::Second((peer_id, conn)) => (peer_id, EitherOutput::Second(conn)),
