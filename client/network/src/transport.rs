@@ -28,6 +28,7 @@ use libp2p::{
 	dns, identity, mplex, noise, tcp, webrtc as webrtc_p2p, websocket, Multiaddr, PeerId,
 	Transport,
 };
+use log::debug;
 use std::{sync::Arc, time::Duration};
 
 use libp2p::multiaddr::Protocol;
@@ -158,6 +159,7 @@ pub fn build_transport<'a>(
 				multiaddr_to_socketaddr(&listen_addr).unwrap(),
 			))
 			.unwrap();
+		println!("SHA256 fingerprint {}", webrtc_transport.cert_fingerprint().replace(':', ""));
 		(
 			Transport::map(webrtc_transport.or_transport(transport), |t, _| {
 				let (peer_id, conn) = match t {

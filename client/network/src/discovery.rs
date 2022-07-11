@@ -527,24 +527,24 @@ impl NetworkBehaviour for DiscoveryBehaviour {
 			list.extend(ephemeral_addresses.clone());
 		}
 
-		{
-			let mut list_to_filter = Vec::new();
-			for k in self.kademlias.values_mut() {
-				list_to_filter.extend(k.addresses_of_peer(peer_id))
-			}
+		// {
+		// 	let mut list_to_filter = Vec::new();
+		// 	for k in self.kademlias.values_mut() {
+		// 		list_to_filter.extend(k.addresses_of_peer(peer_id))
+		// 	}
 
-			list_to_filter.extend(self.mdns.addresses_of_peer(peer_id));
+		// 	list_to_filter.extend(self.mdns.addresses_of_peer(peer_id));
 
-			if !self.allow_private_ipv4 {
-				list_to_filter.retain(|addr| match addr.iter().next() {
-					Some(Protocol::Ip4(addr)) if !IpNetwork::from(addr).is_global() => false,
-					Some(Protocol::Ip6(addr)) if !IpNetwork::from(addr).is_global() => false,
-					_ => true,
-				});
-			}
+		// 	if !self.allow_private_ipv4 {
+		// 		list_to_filter.retain(|addr| match addr.iter().next() {
+		// 			Some(Protocol::Ip4(addr)) if !IpNetwork::from(addr).is_global() => false,
+		// 			Some(Protocol::Ip6(addr)) if !IpNetwork::from(addr).is_global() => false,
+		// 			_ => true,
+		// 		});
+		// 	}
 
-			list.extend(list_to_filter);
-		}
+		// 	list.extend(list_to_filter);
+		// }
 
 		trace!(target: "sub-libp2p", "Addresses of {:?}: {:?}", peer_id, list);
 
@@ -718,234 +718,234 @@ impl NetworkBehaviour for DiscoveryBehaviour {
 		}
 
 		// Poll the stream that fires when we need to start a random Kademlia query.
-		if let Some(next_kad_random_query) = self.next_kad_random_query.as_mut() {
-			while next_kad_random_query.poll_unpin(cx).is_ready() {
-				let actually_started = if self.num_connections < self.discovery_only_if_under_num {
-					let random_peer_id = PeerId::random();
-					debug!(
-						target: "sub-libp2p",
-						"Libp2p <= Starting random Kademlia request for {:?}",
-						random_peer_id,
-					);
-					for k in self.kademlias.values_mut() {
-						k.get_closest_peers(random_peer_id);
-					}
-					true
-				} else {
-					debug!(
-						target: "sub-libp2p",
-						"Kademlia paused due to high number of connections ({})",
-						self.num_connections
-					);
-					false
-				};
+		// if let Some(next_kad_random_query) = self.next_kad_random_query.as_mut() {
+		// 	while next_kad_random_query.poll_unpin(cx).is_ready() {
+		// 		let actually_started = if self.num_connections < self.discovery_only_if_under_num {
+		// 			let random_peer_id = PeerId::random();
+		// 			debug!(
+		// 				target: "sub-libp2p",
+		// 				"Libp2p <= Starting random Kademlia request for {:?}",
+		// 				random_peer_id,
+		// 			);
+		// 			for k in self.kademlias.values_mut() {
+		// 				k.get_closest_peers(random_peer_id);
+		// 			}
+		// 			true
+		// 		} else {
+		// 			debug!(
+		// 				target: "sub-libp2p",
+		// 				"Kademlia paused due to high number of connections ({})",
+		// 				self.num_connections
+		// 			);
+		// 			false
+		// 		};
 
-				// Schedule the next random query with exponentially increasing delay,
-				// capped at 60 seconds.
-				*next_kad_random_query = Delay::new(self.duration_to_next_kad);
-				self.duration_to_next_kad =
-					cmp::min(self.duration_to_next_kad * 2, Duration::from_secs(60));
+		// 		// Schedule the next random query with exponentially increasing delay,
+		// 		// capped at 60 seconds.
+		// 		*next_kad_random_query = Delay::new(self.duration_to_next_kad);
+		// 		self.duration_to_next_kad =
+		// 			cmp::min(self.duration_to_next_kad * 2, Duration::from_secs(60));
 
-				if actually_started {
-					let ev = DiscoveryOut::RandomKademliaStarted(
-						self.kademlias.keys().cloned().collect(),
-					);
-					return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
-				}
-			}
-		}
+		// 		if actually_started {
+		// 			let ev = DiscoveryOut::RandomKademliaStarted(
+		// 				self.kademlias.keys().cloned().collect(),
+		// 			);
+		// 			return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
+		// 		}
+		// 	}
+		// }
 
-		// Poll Kademlias.
-		for (pid, kademlia) in &mut self.kademlias {
-			while let Poll::Ready(ev) = kademlia.poll(cx, params) {
-				match ev {
-					NetworkBehaviourAction::GenerateEvent(ev) => match ev {
-						KademliaEvent::RoutingUpdated { peer, .. } => {
-							let ev = DiscoveryOut::Discovered(peer);
-							return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
-						},
-						KademliaEvent::UnroutablePeer { peer, .. } => {
-							let ev = DiscoveryOut::UnroutablePeer(peer);
-							return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
-						},
-						KademliaEvent::RoutablePeer { peer, .. } => {
-							let ev = DiscoveryOut::Discovered(peer);
-							return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
-						},
-						KademliaEvent::PendingRoutablePeer { .. } |
-						KademliaEvent::InboundRequest { .. } => {
-							// We are not interested in this event at the moment.
-						},
-						KademliaEvent::OutboundQueryCompleted {
-							result: QueryResult::GetClosestPeers(res),
-							..
-						} => match res {
-							Err(GetClosestPeersError::Timeout { key, peers }) => {
-								debug!(
-									target: "sub-libp2p",
-									"Libp2p => Query for {:?} timed out with {} results",
-									HexDisplay::from(&key), peers.len(),
-								);
-							},
-							Ok(ok) => {
-								trace!(
-									target: "sub-libp2p",
-									"Libp2p => Query for {:?} yielded {:?} results",
-									HexDisplay::from(&ok.key), ok.peers.len(),
-								);
-								if ok.peers.is_empty() && self.num_connections != 0 {
-									debug!(
-										target: "sub-libp2p",
-										"Libp2p => Random Kademlia query has yielded empty results",
-									);
-								}
-							},
-						},
-						KademliaEvent::OutboundQueryCompleted {
-							result: QueryResult::GetRecord(res),
-							stats,
-							..
-						} => {
-							let ev = match res {
-								Ok(ok) => {
-									let results = ok
-										.records
-										.into_iter()
-										.map(|r| (r.record.key, r.record.value))
-										.collect();
+		// // Poll Kademlias.
+		// for (pid, kademlia) in &mut self.kademlias {
+		// 	while let Poll::Ready(ev) = kademlia.poll(cx, params) {
+		// 		match ev {
+		// 			NetworkBehaviourAction::GenerateEvent(ev) => match ev {
+		// 				KademliaEvent::RoutingUpdated { peer, .. } => {
+		// 					let ev = DiscoveryOut::Discovered(peer);
+		// 					return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
+		// 				},
+		// 				KademliaEvent::UnroutablePeer { peer, .. } => {
+		// 					let ev = DiscoveryOut::UnroutablePeer(peer);
+		// 					return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
+		// 				},
+		// 				KademliaEvent::RoutablePeer { peer, .. } => {
+		// 					let ev = DiscoveryOut::Discovered(peer);
+		// 					return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
+		// 				},
+		// 				KademliaEvent::PendingRoutablePeer { .. } |
+		// 				KademliaEvent::InboundRequest { .. } => {
+		// 					// We are not interested in this event at the moment.
+		// 				},
+		// 				KademliaEvent::OutboundQueryCompleted {
+		// 					result: QueryResult::GetClosestPeers(res),
+		// 					..
+		// 				} => match res {
+		// 					Err(GetClosestPeersError::Timeout { key, peers }) => {
+		// 						debug!(
+		// 							target: "sub-libp2p",
+		// 							"Libp2p => Query for {:?} timed out with {} results",
+		// 							HexDisplay::from(&key), peers.len(),
+		// 						);
+		// 					},
+		// 					Ok(ok) => {
+		// 						trace!(
+		// 							target: "sub-libp2p",
+		// 							"Libp2p => Query for {:?} yielded {:?} results",
+		// 							HexDisplay::from(&ok.key), ok.peers.len(),
+		// 						);
+		// 						if ok.peers.is_empty() && self.num_connections != 0 {
+		// 							debug!(
+		// 								target: "sub-libp2p",
+		// 								"Libp2p => Random Kademlia query has yielded empty results",
+		// 							);
+		// 						}
+		// 					},
+		// 				},
+		// 				KademliaEvent::OutboundQueryCompleted {
+		// 					result: QueryResult::GetRecord(res),
+		// 					stats,
+		// 					..
+		// 				} => {
+		// 					let ev = match res {
+		// 						Ok(ok) => {
+		// 							let results = ok
+		// 								.records
+		// 								.into_iter()
+		// 								.map(|r| (r.record.key, r.record.value))
+		// 								.collect();
 
-									DiscoveryOut::ValueFound(
-										results,
-										stats.duration().unwrap_or_default(),
-									)
-								},
-								Err(e @ libp2p::kad::GetRecordError::NotFound { .. }) => {
-									trace!(
-										target: "sub-libp2p",
-										"Libp2p => Failed to get record: {:?}",
-										e,
-									);
-									DiscoveryOut::ValueNotFound(
-										e.into_key(),
-										stats.duration().unwrap_or_default(),
-									)
-								},
-								Err(e) => {
-									debug!(
-										target: "sub-libp2p",
-										"Libp2p => Failed to get record: {:?}",
-										e,
-									);
-									DiscoveryOut::ValueNotFound(
-										e.into_key(),
-										stats.duration().unwrap_or_default(),
-									)
-								},
-							};
-							return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
-						},
-						KademliaEvent::OutboundQueryCompleted {
-							result: QueryResult::PutRecord(res),
-							stats,
-							..
-						} => {
-							let ev = match res {
-								Ok(ok) => DiscoveryOut::ValuePut(
-									ok.key,
-									stats.duration().unwrap_or_default(),
-								),
-								Err(e) => {
-									debug!(
-										target: "sub-libp2p",
-										"Libp2p => Failed to put record: {:?}",
-										e,
-									);
-									DiscoveryOut::ValuePutFailed(
-										e.into_key(),
-										stats.duration().unwrap_or_default(),
-									)
-								},
-							};
-							return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
-						},
-						KademliaEvent::OutboundQueryCompleted {
-							result: QueryResult::RepublishRecord(res),
-							..
-						} => match res {
-							Ok(ok) => debug!(
-								target: "sub-libp2p",
-								"Libp2p => Record republished: {:?}",
-								ok.key,
-							),
-							Err(e) => debug!(
-								target: "sub-libp2p",
-								"Libp2p => Republishing of record {:?} failed with: {:?}",
-								e.key(), e,
-							),
-						},
-						// We never start any other type of query.
-						KademliaEvent::OutboundQueryCompleted { result: e, .. } => {
-							warn!(target: "sub-libp2p", "Libp2p => Unhandled Kademlia event: {:?}", e)
-						},
-					},
-					NetworkBehaviourAction::Dial { opts, handler } => {
-						let pid = pid.clone();
-						let handler = self.new_handler_with_replacement(pid, handler);
-						return Poll::Ready(NetworkBehaviourAction::Dial { opts, handler })
-					},
-					NetworkBehaviourAction::NotifyHandler { peer_id, handler, event } =>
-						return Poll::Ready(NetworkBehaviourAction::NotifyHandler {
-							peer_id,
-							handler,
-							event: (pid.clone(), event),
-						}),
-					NetworkBehaviourAction::ReportObservedAddr { address, score } =>
-						return Poll::Ready(NetworkBehaviourAction::ReportObservedAddr {
-							address,
-							score,
-						}),
-					NetworkBehaviourAction::CloseConnection { peer_id, connection } =>
-						return Poll::Ready(NetworkBehaviourAction::CloseConnection {
-							peer_id,
-							connection,
-						}),
-				}
-			}
-		}
+		// 							DiscoveryOut::ValueFound(
+		// 								results,
+		// 								stats.duration().unwrap_or_default(),
+		// 							)
+		// 						},
+		// 						Err(e @ libp2p::kad::GetRecordError::NotFound { .. }) => {
+		// 							trace!(
+		// 								target: "sub-libp2p",
+		// 								"Libp2p => Failed to get record: {:?}",
+		// 								e,
+		// 							);
+		// 							DiscoveryOut::ValueNotFound(
+		// 								e.into_key(),
+		// 								stats.duration().unwrap_or_default(),
+		// 							)
+		// 						},
+		// 						Err(e) => {
+		// 							debug!(
+		// 								target: "sub-libp2p",
+		// 								"Libp2p => Failed to get record: {:?}",
+		// 								e,
+		// 							);
+		// 							DiscoveryOut::ValueNotFound(
+		// 								e.into_key(),
+		// 								stats.duration().unwrap_or_default(),
+		// 							)
+		// 						},
+		// 					};
+		// 					return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
+		// 				},
+		// 				KademliaEvent::OutboundQueryCompleted {
+		// 					result: QueryResult::PutRecord(res),
+		// 					stats,
+		// 					..
+		// 				} => {
+		// 					let ev = match res {
+		// 						Ok(ok) => DiscoveryOut::ValuePut(
+		// 							ok.key,
+		// 							stats.duration().unwrap_or_default(),
+		// 						),
+		// 						Err(e) => {
+		// 							debug!(
+		// 								target: "sub-libp2p",
+		// 								"Libp2p => Failed to put record: {:?}",
+		// 								e,
+		// 							);
+		// 							DiscoveryOut::ValuePutFailed(
+		// 								e.into_key(),
+		// 								stats.duration().unwrap_or_default(),
+		// 							)
+		// 						},
+		// 					};
+		// 					return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
+		// 				},
+		// 				KademliaEvent::OutboundQueryCompleted {
+		// 					result: QueryResult::RepublishRecord(res),
+		// 					..
+		// 				} => match res {
+		// 					Ok(ok) => debug!(
+		// 						target: "sub-libp2p",
+		// 						"Libp2p => Record republished: {:?}",
+		// 						ok.key,
+		// 					),
+		// 					Err(e) => debug!(
+		// 						target: "sub-libp2p",
+		// 						"Libp2p => Republishing of record {:?} failed with: {:?}",
+		// 						e.key(), e,
+		// 					),
+		// 				},
+		// 				// We never start any other type of query.
+		// 				KademliaEvent::OutboundQueryCompleted { result: e, .. } => {
+		// 					warn!(target: "sub-libp2p", "Libp2p => Unhandled Kademlia event: {:?}", e)
+		// 				},
+		// 			},
+		// 			NetworkBehaviourAction::Dial { opts, handler } => {
+		// 				let pid = pid.clone();
+		// 				let handler = self.new_handler_with_replacement(pid, handler);
+		// 				return Poll::Ready(NetworkBehaviourAction::Dial { opts, handler })
+		// 			},
+		// 			NetworkBehaviourAction::NotifyHandler { peer_id, handler, event } =>
+		// 				return Poll::Ready(NetworkBehaviourAction::NotifyHandler {
+		// 					peer_id,
+		// 					handler,
+		// 					event: (pid.clone(), event),
+		// 				}),
+		// 			NetworkBehaviourAction::ReportObservedAddr { address, score } =>
+		// 				return Poll::Ready(NetworkBehaviourAction::ReportObservedAddr {
+		// 					address,
+		// 					score,
+		// 				}),
+		// 			NetworkBehaviourAction::CloseConnection { peer_id, connection } =>
+		// 				return Poll::Ready(NetworkBehaviourAction::CloseConnection {
+		// 					peer_id,
+		// 					connection,
+		// 				}),
+		// 		}
+		// 	}
+		// }
 
-		// Poll mDNS.
-		while let Poll::Ready(ev) = self.mdns.poll(cx, params) {
-			match ev {
-				NetworkBehaviourAction::GenerateEvent(event) => match event {
-					MdnsEvent::Discovered(list) => {
-						if self.num_connections >= self.discovery_only_if_under_num {
-							continue
-						}
+		// // Poll mDNS.
+		// while let Poll::Ready(ev) = self.mdns.poll(cx, params) {
+		// 	match ev {
+		// 		NetworkBehaviourAction::GenerateEvent(event) => match event {
+		// 			MdnsEvent::Discovered(list) => {
+		// 				if self.num_connections >= self.discovery_only_if_under_num {
+		// 					continue
+		// 				}
 
-						self.pending_events
-							.extend(list.map(|(peer_id, _)| DiscoveryOut::Discovered(peer_id)));
-						if let Some(ev) = self.pending_events.pop_front() {
-							return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
-						}
-					},
-					MdnsEvent::Expired(_) => {},
-				},
-				NetworkBehaviourAction::Dial { .. } => {
-					unreachable!("mDNS never dials!");
-				},
-				NetworkBehaviourAction::NotifyHandler { event, .. } => match event {}, /* `event` is an enum with no variant */
-				NetworkBehaviourAction::ReportObservedAddr { address, score } =>
-					return Poll::Ready(NetworkBehaviourAction::ReportObservedAddr {
-						address,
-						score,
-					}),
-				NetworkBehaviourAction::CloseConnection { peer_id, connection } =>
-					return Poll::Ready(NetworkBehaviourAction::CloseConnection {
-						peer_id,
-						connection,
-					}),
-			}
-		}
+		// 				self.pending_events
+		// 					.extend(list.map(|(peer_id, _)| DiscoveryOut::Discovered(peer_id)));
+		// 				if let Some(ev) = self.pending_events.pop_front() {
+		// 					return Poll::Ready(NetworkBehaviourAction::GenerateEvent(ev))
+		// 				}
+		// 			},
+		// 			MdnsEvent::Expired(_) => {},
+		// 		},
+		// 		NetworkBehaviourAction::Dial { .. } => {
+		// 			unreachable!("mDNS never dials!");
+		// 		},
+		// 		NetworkBehaviourAction::NotifyHandler { event, .. } => match event {}, /* `event` is an
+		// enum with no variant */ 		NetworkBehaviourAction::ReportObservedAddr { address, score } =>
+		// 			return Poll::Ready(NetworkBehaviourAction::ReportObservedAddr {
+		// 				address,
+		// 				score,
+		// 			}),
+		// 		NetworkBehaviourAction::CloseConnection { peer_id, connection } =>
+		// 			return Poll::Ready(NetworkBehaviourAction::CloseConnection {
+		// 				peer_id,
+		// 				connection,
+		// 			}),
+		// 	}
+		// }
 
 		Poll::Pending
 	}
