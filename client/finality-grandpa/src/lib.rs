@@ -68,6 +68,7 @@ use sc_client_api::{
 	StorageProvider, TransactionFor,
 };
 use sc_consensus::BlockImport;
+use sc_network_common::protocol::ProtocolName;
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 use sp_api::ProvideRuntimeApi;
@@ -266,7 +267,7 @@ pub struct Config {
 	/// TelemetryHandle instance.
 	pub telemetry: Option<TelemetryHandle>,
 	/// Chain specific GRANDPA protocol name. See [`crate::protocol_standard_name`].
-	pub protocol_name: std::borrow::Cow<'static, str>,
+	pub protocol_name: ProtocolName,
 }
 
 impl Config {
@@ -723,7 +724,7 @@ pub struct GrandpaParams<Block: BlockT, C, N, SC, VR> {
 /// [`sc_network::config::NetworkConfiguration::extra_sets`].
 /// For standard protocol name see [`crate::protocol_standard_name`].
 pub fn grandpa_peers_set_config(
-	protocol_name: std::borrow::Cow<'static, str>,
+	protocol_name: ProtocolName,
 ) -> sc_network::config::NonDefaultSetConfig {
 	use communication::grandpa_protocol_name;
 	sc_network::config::NonDefaultSetConfig {
@@ -1170,11 +1171,15 @@ fn local_authority_id(
 pub fn revert<Block, Client>(client: Arc<Client>, blocks: NumberFor<Block>) -> ClientResult<()>
 where
 	Block: BlockT,
-	Client: AuxStore + HeaderMetadata<Block, Error = sp_blockchain::Error> + HeaderBackend<Block>,
+	Client: AuxStore + HeaderMetadata<Block, Error = ClientError> + HeaderBackend<Block>,
 {
 	let best_number = client.info().best_number;
 	let finalized = client.info().finalized_number;
+
 	let revertible = blocks.min(best_number - finalized);
+	if revertible == Zero::zero() {
+		return Ok(())
+	}
 
 	let number = best_number - revertible;
 	let hash = client
@@ -1185,8 +1190,12 @@ where
 		)))?;
 
 	let info = client.info();
+
 	let persistent_data: PersistentData<Block> =
-		aux_schema::load_persistent(&*client, info.genesis_hash, Zero::zero(), || unreachable!())?;
+		aux_schema::load_persistent(&*client, info.genesis_hash, Zero::zero(), || {
+			const MSG: &str = "Unexpected missing grandpa data during revert";
+			Err(ClientError::Application(Box::from(MSG)))
+		})?;
 
 	let shared_authority_set = persistent_data.authority_set;
 	let mut authority_set = shared_authority_set.inner();

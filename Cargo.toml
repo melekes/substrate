@@ -116,6 +116,7 @@ members = [
 	"frame/nomination-pools",
 	"frame/nomination-pools/benchmarking",
 	"frame/nomination-pools/test-staking",
+	"frame/nomination-pools/runtime-api",
 	"frame/randomness-collective-flip",
 	"frame/ranked-collective",
 	"frame/recovery",
@@ -257,7 +258,7 @@ crc32fast = { opt-level = 3 }
 crossbeam-deque = { opt-level = 3 }
 crypto-mac = { opt-level = 3 }
 curve25519-dalek = { opt-level = 3 }
-ed25519-dalek = { opt-level = 3 }
+ed25519-zebra = { opt-level = 3 }
 flate2 = { opt-level = 3 }
 futures-channel = { opt-level = 3 }
 hashbrown = { opt-level = 3 }
@@ -306,7 +307,8 @@ lto = "fat"
 # https://doc.rust-lang.org/rustc/codegen-options/index.html#codegen-units
 codegen-units = 1
 
-# TODO: remove
 [patch.crates-io]
-libp2p = { version = "0.46.0", git = "https://github.com/melekes/rust-libp2p.git", branch = "anton/webrtc-transport" }
-multiaddr = { version = "0.14.0", git = "https://github.com/melekes/rust-multiaddr.git", branch = "anton/x-webrtc" }
+# TODO: remove once a new version of libp2p w/ webrtc is released
+libp2p = { version = "0.49.0", git = "https://github.com/melekes/rust-libp2p.git", branch = "anton/webrtc-transport" }
+# TODO: remove once a new version of rust-multiaddr is released
+multiaddr = { version = "0.15.0", git = "https://github.com/multiformats/rust-multiaddr.git", branch = "master" }

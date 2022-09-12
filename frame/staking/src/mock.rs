@@ -33,11 +33,10 @@ use sp_core::H256;
 use sp_io;
 use sp_runtime::{
 	curve::PiecewiseLinear,
-	testing::{Header, TestXt, UintAuthorityId},
+	testing::{Header, UintAuthorityId},
 	traits::{IdentityLookup, Zero},
 };
 use sp_staking::offence::{DisableStrategy, OffenceDetails, OnOffenceHandler};
-use std::cell::RefCell;
 
 pub const INIT_TIMESTAMP: u64 = 30_000;
 pub const BLOCK_TIME: u64 = 1000;
@@ -216,16 +215,16 @@ parameter_types! {
 	pub const OffendingValidatorsThreshold: Perbill = Perbill::from_percent(75);
 }
 
-thread_local! {
-	pub static REWARD_REMAINDER_UNBALANCED: RefCell<u128> = RefCell::new(0);
+parameter_types! {
+	pub static RewardRemainderUnbalanced: u128 = 0;
 }
 
 pub struct RewardRemainderMock;
 
 impl OnUnbalanced<NegativeImbalanceOf<Test>> for RewardRemainderMock {
 	fn on_nonzero_unbalanced(amount: NegativeImbalanceOf<Test>) {
-		REWARD_REMAINDER_UNBALANCED.with(|v| {
-			*v.borrow_mut() += amount.peek();
+		RewardRemainderUnbalanced::mutate(|v| {
+			*v += amount.peek();
 		});
 		drop(amount);
 	}
@@ -304,15 +303,6 @@ impl crate::pallet::pallet::Config for Test {
 	type WeightInfo = ();
 }
 
-impl<LocalCall> frame_system::offchain::SendTransactionTypes<LocalCall> for Test
-where
-	Call: From<LocalCall>,
-{
-	type OverarchingCall = Call;
-	type Extrinsic = Extrinsic;
-}
-
-pub type Extrinsic = TestXt<Call, ()>;
 pub(crate) type StakingCall = crate::Call<Test>;
 pub(crate) type TestRuntimeCall = <Test as frame_system::Config>::Call;
 
@@ -549,6 +539,7 @@ impl ExtBuilder {
 		ext
 	}
 	pub fn build_and_execute(self, test: impl FnOnce() -> ()) {
+		sp_tracing::try_init_simple();
 		let mut ext = self.build();
 		ext.execute_with(test);
 		ext.execute_with(post_conditions);
@@ -834,7 +825,7 @@ pub(crate) fn on_offence_now(
 pub(crate) fn add_slash(who: &AccountId) {
 	on_offence_now(
 		&[OffenceDetails {
-			offender: (who.clone(), Staking::eras_stakers(active_era(), who.clone())),
+			offender: (*who, Staking::eras_stakers(active_era(), *who)),
 			reporters: vec![],
 		}],
 		&[Perbill::from_percent(10)],
@@ -882,6 +873,20 @@ pub(crate) fn staking_events() -> Vec<crate::Event<Test>> {
 		.map(|r| r.event)
 		.filter_map(|e| if let Event::Staking(inner) = e { Some(inner) } else { None })
 		.collect()
+}
+
+parameter_types! {
+	static StakingEventsIndex: usize = 0;
+}
+
+pub(crate) fn staking_events_since_last_call() -> Vec<crate::Event<Test>> {
+	let all: Vec<_> = System::events()
+		.into_iter()
+		.filter_map(|r| if let Event::Staking(inner) = r.event { Some(inner) } else { None })
+		.collect();
+	let seen = StakingEventsIndex::get();
+	StakingEventsIndex::set(all.len());
+	all.into_iter().skip(seen).collect()
 }
 
 pub(crate) fn balances(who: &AccountId) -> (Balance, Balance) {
