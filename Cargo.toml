@@ -309,6 +309,6 @@ codegen-units = 1
 
 [patch.crates-io]
 # TODO: remove once a new version of libp2p w/ webrtc is released
-libp2p = { version = "0.49.0", git = "https://github.com/melekes/rust-libp2p.git", branch = "anton/webrtc-transport" }
+libp2p = { version = "0.46.1", git = "https://github.com/melekes/rust-libp2p.git", branch = "anton/webrtc-transport-libp2p-0.46" }
 # TODO: remove once a new version of rust-multiaddr is released
 multiaddr = { version = "0.15.0", git = "https://github.com/multiformats/rust-multiaddr.git", branch = "master" }

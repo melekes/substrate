@@ -3372,24 +3372,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "if-watch"
-version = "2.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "065c008e570a43c00de6aed9714035e5ea6a498c255323db9091722af6ee67dd"
-dependencies = [
- "async-io",
- "core-foundation",
- "fnv",
- "futures",
- "if-addrs",
- "ipnet",
- "log",
- "rtnetlink",
- "system-configuration",
- "windows",
-]
-
-[[package]]
 name = "impl-codec"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3914,8 +3896,8 @@ checksum = "292a948cd991e376cf75541fe5b97a1081d713c618b4f1b9500f8844e49eb565"
 
 [[package]]
 name = "libp2p"
-version = "0.49.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.46.1"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "bytes",
  "futures",
@@ -3957,8 +3939,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-autonat"
-version = "0.7.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.5.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "async-trait",
  "futures",
@@ -3968,15 +3950,15 @@ dependencies = [
  "libp2p-request-response",
  "libp2p-swarm",
  "log",
- "prost 0.11.0",
- "prost-build 0.11.1",
+ "prost",
+ "prost-build",
  "rand 0.8.5",
 ]
 
 [[package]]
 name = "libp2p-core"
-version = "0.36.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.34.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "asn1_der",
  "bs58",
@@ -3994,8 +3976,8 @@ dependencies = [
  "multistream-select",
  "parking_lot 0.12.1",
  "pin-project",
- "prost 0.11.0",
- "prost-build 0.11.1",
+ "prost",
+ "prost-build",
  "rand 0.8.5",
  "ring",
  "rw-stream-sink",
@@ -4009,8 +3991,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-deflate"
-version = "0.36.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.34.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "flate2",
  "futures",
@@ -4019,8 +4001,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-dns"
-version = "0.36.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.34.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "async-std-resolver",
  "futures",
@@ -4033,8 +4015,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-floodsub"
-version = "0.39.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.37.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "cuckoofilter",
  "fnv",
@@ -4042,16 +4024,16 @@ dependencies = [
  "libp2p-core",
  "libp2p-swarm",
  "log",
- "prost 0.11.0",
- "prost-build 0.11.1",
+ "prost",
+ "prost-build",
  "rand 0.7.3",
  "smallvec",
 ]
 
 [[package]]
 name = "libp2p-gossipsub"
-version = "0.41.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.39.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "asynchronous-codec",
  "base64",
@@ -4065,8 +4047,8 @@ dependencies = [
  "libp2p-swarm",
  "log",
  "prometheus-client",
- "prost 0.11.0",
- "prost-build 0.11.1",
+ "prost",
+ "prost-build",
  "rand 0.7.3",
  "regex",
  "sha2 0.10.5",
@@ -4077,8 +4059,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-identify"
-version = "0.39.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.37.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "asynchronous-codec",
  "futures",
@@ -4087,8 +4069,8 @@ dependencies = [
  "libp2p-swarm",
  "log",
  "lru",
- "prost 0.11.0",
- "prost-build 0.11.1",
+ "prost",
+ "prost-build",
  "prost-codec",
  "smallvec",
  "thiserror",
@@ -4097,8 +4079,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-kad"
-version = "0.40.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.38.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "arrayvec 0.7.2",
  "asynchronous-codec",
@@ -4111,8 +4093,8 @@ dependencies = [
  "libp2p-core",
  "libp2p-swarm",
  "log",
- "prost 0.11.0",
- "prost-build 0.11.1",
+ "prost",
+ "prost-build",
  "rand 0.7.3",
  "sha2 0.10.5",
  "smallvec",
@@ -4124,14 +4106,14 @@ dependencies = [
 
 [[package]]
 name = "libp2p-mdns"
-version = "0.40.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.38.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "async-io",
  "data-encoding",
  "dns-parser",
  "futures",
- "if-watch 1.1.1",
+ "if-watch",
  "lazy_static",
  "libp2p-core",
  "libp2p-swarm",
@@ -4144,8 +4126,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-metrics"
-version = "0.9.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.7.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "libp2p-core",
  "libp2p-gossipsub",
@@ -4159,8 +4141,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-mplex"
-version = "0.36.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.34.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "asynchronous-codec",
  "bytes",
@@ -4176,8 +4158,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-noise"
-version = "0.39.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.37.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "bytes",
  "curve25519-dalek 3.2.0",
@@ -4185,8 +4167,8 @@ dependencies = [
  "lazy_static",
  "libp2p-core",
  "log",
- "prost 0.11.0",
- "prost-build 0.11.1",
+ "prost",
+ "prost-build",
  "rand 0.8.5",
  "sha2 0.10.5",
  "snow",
@@ -4197,8 +4179,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-ping"
-version = "0.39.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.37.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "futures",
  "futures-timer",
@@ -4212,16 +4194,16 @@ dependencies = [
 
 [[package]]
 name = "libp2p-plaintext"
-version = "0.36.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.34.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "asynchronous-codec",
  "bytes",
  "futures",
  "libp2p-core",
  "log",
- "prost 0.11.0",
- "prost-build 0.11.1",
+ "prost",
+ "prost-build",
  "unsigned-varint",
  "void",
 ]
@@ -4229,7 +4211,7 @@ dependencies = [
 [[package]]
 name = "libp2p-pnet"
 version = "0.22.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "futures",
  "log",
@@ -4241,8 +4223,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-relay"
-version = "0.12.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.10.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "asynchronous-codec",
  "bytes",
@@ -4254,8 +4236,8 @@ dependencies = [
  "libp2p-swarm",
  "log",
  "pin-project",
- "prost 0.11.0",
- "prost-build 0.11.1",
+ "prost",
+ "prost-build",
  "prost-codec",
  "rand 0.8.5",
  "smallvec",
@@ -4266,8 +4248,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-rendezvous"
-version = "0.9.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.7.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "asynchronous-codec",
  "bimap",
@@ -4277,8 +4259,8 @@ dependencies = [
  "libp2p-core",
  "libp2p-swarm",
  "log",
- "prost 0.11.0",
- "prost-build 0.11.1",
+ "prost",
+ "prost-build",
  "rand 0.8.5",
  "sha2 0.10.5",
  "thiserror",
@@ -4288,8 +4270,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-request-response"
-version = "0.21.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.19.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "async-trait",
  "bytes",
@@ -4305,8 +4287,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-swarm"
-version = "0.39.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.37.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "either",
  "fnv",
@@ -4324,23 +4306,23 @@ dependencies = [
 
 [[package]]
 name = "libp2p-swarm-derive"
-version = "0.30.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.28.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
- "heck",
  "quote",
  "syn",
 ]
 
 [[package]]
 name = "libp2p-tcp"
-version = "0.37.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.34.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "async-io",
  "futures",
  "futures-timer",
- "if-watch 2.0.0",
+ "if-watch",
+ "ipnet",
  "libc",
  "libp2p-core",
  "log",
@@ -4349,8 +4331,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-uds"
-version = "0.35.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.33.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "async-std",
  "futures",
@@ -4360,8 +4342,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-wasm-ext"
-version = "0.36.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.34.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "futures",
  "js-sys",
@@ -4373,8 +4355,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-websocket"
-version = "0.38.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.36.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "either",
  "futures",
@@ -4391,8 +4373,8 @@ dependencies = [
 
 [[package]]
 name = "libp2p-yamux"
-version = "0.40.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.38.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "futures",
  "libp2p-core",
@@ -4815,7 +4797,7 @@ checksum = "e5ce46fe64a9d73be07dcbe690a38ce1b293be448fd8ce1e6c1b8062c9f72c6a"
 [[package]]
 name = "multistream-select"
 version = "0.11.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "bytes",
  "futures",
@@ -7448,21 +7430,21 @@ dependencies = [
 
 [[package]]
 name = "prometheus-client"
-version = "0.18.0"
+version = "0.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3c473049631c233933d6286c88bbb7be30e62ec534cf99a9ae0079211f7fa603"
+checksum = "ac1abe0255c04d15f571427a2d1e00099016506cf3297b53853acd2b7eb87825"
 dependencies = [
  "dtoa",
  "itoa 1.0.3",
- "parking_lot 0.12.1",
+ "owning_ref",
  "prometheus-client-derive-text-encode",
 ]
 
 [[package]]
 name = "prometheus-client-derive-text-encode"
-version = "0.3.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "66a455fbcb954c1a7decf3c586e860fd7889cddf4b8e164be736dbac95a953cd"
+checksum = "e8e12d01b9d66ad9eb4529c57666b6263fc1993cb30261d83ead658fdd932652"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -7476,17 +7458,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "71adf41db68aa0daaefc69bb30bcd68ded9b9abaad5d1fbb6304c4fb390e083e"
 dependencies = [
  "bytes",
- "prost-derive 0.10.1",
-]
-
-[[package]]
-name = "prost"
-version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "399c3c31cdec40583bb68f0b18403400d01ec4289c383aa047560439952c4dd7"
-dependencies = [
- "bytes",
- "prost-derive 0.11.0",
+ "prost-derive",
 ]
 
 [[package]]
@@ -7504,28 +7476,8 @@ dependencies = [
  "log",
  "multimap",
  "petgraph",
- "prost 0.10.4",
- "prost-types 0.10.1",
- "regex",
- "tempfile",
- "which",
-]
-
-[[package]]
-name = "prost-build"
-version = "0.11.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7f835c582e6bd972ba8347313300219fed5bfa52caf175298d860b61ff6069bb"
-dependencies = [
- "bytes",
- "heck",
- "itertools",
- "lazy_static",
- "log",
- "multimap",
- "petgraph",
- "prost 0.11.0",
- "prost-types 0.11.1",
+ "prost",
+ "prost-types",
  "regex",
  "tempfile",
  "which",
@@ -7533,12 +7485,12 @@ dependencies = [
 
 [[package]]
 name = "prost-codec"
-version = "0.2.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+version = "0.1.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "asynchronous-codec",
  "bytes",
- "prost 0.11.0",
+ "prost",
  "thiserror",
  "unsigned-varint",
 ]
@@ -7557,36 +7509,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "prost-derive"
-version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7345d5f0e08c0536d7ac7229952590239e77abf0a0100a1b1d890add6ea96364"
-dependencies = [
- "anyhow",
- "itertools",
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "prost-types"
 version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2d0a014229361011dc8e69c8a1ec6c2e8d0f2af7c91e3ea3f5b2170298461e68"
 dependencies = [
  "bytes",
- "prost 0.10.4",
-]
-
-[[package]]
-name = "prost-types"
-version = "0.11.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4dfaa718ad76a44b3415e6c4d53b17c8f99160dcb3a99b10470fce8ad43f6e3e"
-dependencies = [
- "bytes",
- "prost 0.11.0",
+ "prost",
 ]
 
 [[package]]
@@ -8185,7 +8114,7 @@ dependencies = [
 [[package]]
 name = "rw-stream-sink"
 version = "0.3.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport#af769717d353f6aec88943fb96e495c208d4f3ab"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
 dependencies = [
  "futures",
  "pin-project",
@@ -8246,8 +8175,8 @@ dependencies = [
  "libp2p",
  "log",
  "parity-scale-codec",
- "prost 0.10.4",
- "prost-build 0.10.4",
+ "prost",
+ "prost-build",
  "quickcheck",
  "rand 0.7.3",
  "sc-client-api",
@@ -8902,8 +8831,8 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.1",
  "pin-project",
- "prost 0.10.4",
- "prost-build 0.10.4",
+ "prost",
+ "prost-build",
  "rand 0.7.3",
  "rcgen",
  "sc-block-builder",
@@ -8945,7 +8874,7 @@ dependencies = [
  "futures",
  "libp2p",
  "parity-scale-codec",
- "prost-build 0.10.4",
+ "prost-build",
  "sc-consensus",
  "sc-peerset",
  "serde",
@@ -8986,8 +8915,8 @@ dependencies = [
  "libp2p",
  "log",
  "parity-scale-codec",
- "prost 0.10.4",
- "prost-build 0.10.4",
+ "prost",
+ "prost-build",
  "sc-client-api",
  "sc-network-common",
  "sc-peerset",
@@ -9008,8 +8937,8 @@ dependencies = [
  "log",
  "lru",
  "parity-scale-codec",
- "prost 0.10.4",
- "prost-build 0.10.4",
+ "prost",
+ "prost-build",
  "quickcheck",
  "sc-block-builder",
  "sc-client-api",
