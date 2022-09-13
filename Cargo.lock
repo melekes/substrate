@@ -3372,6 +3372,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "if-watch"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "065c008e570a43c00de6aed9714035e5ea6a498c255323db9091722af6ee67dd"
+dependencies = [
+ "async-io",
+ "core-foundation",
+ "fnv",
+ "futures",
+ "if-addrs",
+ "ipnet",
+ "log",
+ "rtnetlink",
+ "system-configuration",
+ "windows",
+]
+
+[[package]]
 name = "impl-codec"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3928,6 +3946,7 @@ dependencies = [
  "libp2p-tcp",
  "libp2p-uds",
  "libp2p-wasm-ext",
+ "libp2p-webrtc",
  "libp2p-websocket",
  "libp2p-yamux",
  "multiaddr",
@@ -4113,7 +4132,7 @@ dependencies = [
  "data-encoding",
  "dns-parser",
  "futures",
- "if-watch",
+ "if-watch 1.1.1",
  "lazy_static",
  "libp2p-core",
  "libp2p-swarm",
@@ -4321,7 +4340,7 @@ dependencies = [
  "async-io",
  "futures",
  "futures-timer",
- "if-watch",
+ "if-watch 1.1.1",
  "ipnet",
  "libc",
  "libp2p-core",
@@ -4351,6 +4370,32 @@ dependencies = [
  "parity-send-wrapper",
  "wasm-bindgen",
  "wasm-bindgen-futures",
+]
+
+[[package]]
+name = "libp2p-webrtc"
+version = "0.1.0"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+dependencies = [
+ "async-trait",
+ "bytes",
+ "fnv",
+ "futures",
+ "futures-lite",
+ "futures-timer",
+ "hex",
+ "if-watch 2.0.0",
+ "libp2p-core",
+ "libp2p-noise",
+ "log",
+ "multihash",
+ "rand 0.8.5",
+ "serde",
+ "stun",
+ "thiserror",
+ "tinytemplate",
+ "tokio",
+ "webrtc",
 ]
 
 [[package]]
