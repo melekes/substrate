@@ -2066,7 +2066,8 @@ fn webrtc_listen_address<'a>(
 		None
 	} else {
 		return addresses
-			.filter(|x| x.iter().any(|y| matches!(y,
-						libp2p::core::multiaddr::Protocol::XWebRTC(_)))).cloned().next()
+			.filter(|x| x.iter().any(|y| matches!(y, libp2p::core::multiaddr::Protocol::WebRTC)))
+			.cloned()
+			.next()
 	}
 }

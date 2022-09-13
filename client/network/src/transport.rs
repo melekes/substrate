@@ -47,15 +47,15 @@ fn multiaddr_to_socketaddr(addr: &Multiaddr) -> Option<SocketAddr> {
 	for proto in iter {
 		match proto {
 			Protocol::P2p(_) => {}, /* Ignore a `/p2p/...` prefix of possibly outer protocols, */
-			// if present.
+			Protocol::Certhash(_) => {},
 			_ => return None,
 		}
 	}
 
 	match (proto1, proto2, proto3) {
-		(Protocol::Ip4(ip), Protocol::Udp(port), Protocol::XWebRTC(_)) =>
+		(Protocol::Ip4(ip), Protocol::Udp(port), Protocol::WebRTC) =>
 			Some(SocketAddr::new(ip.into(), port)),
-		(Protocol::Ip6(ip), Protocol::Udp(port), Protocol::XWebRTC(_)) =>
+		(Protocol::Ip6(ip), Protocol::Udp(port), Protocol::WebRTC) =>
 			Some(SocketAddr::new(ip.into(), port)),
 		_ => None,
 	}
