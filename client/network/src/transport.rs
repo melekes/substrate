@@ -153,9 +153,9 @@ pub fn build_transport<'a>(
 		// TODO: make `cert` an argument
 		let kp = rcgen::KeyPair::generate(&rcgen::PKCS_ECDSA_P256_SHA256).expect("key pair");
 		let cert = RTCCertificate::from_key_pair(kp).expect("certificate");
-		let webrtc_transport = webrtc_p2p::transport::WebRTCTransport::new(cert, keypair);
 		// TODO: transform fingerprint to multibase multihash
 		println!("SHA256 fingerprint {:?}", cert.get_fingerprints().unwrap().first().unwrap());
+		let webrtc_transport = webrtc_p2p::transport::WebRTCTransport::new(cert, keypair);
 		(
 			Transport::map(webrtc_transport.or_transport(transport), |t, _| {
 				let (peer_id, conn) = match t {
