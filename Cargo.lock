@@ -8873,6 +8873,8 @@ dependencies = [
  "linked_hash_set",
  "log",
  "lru",
+ "multibase",
+ "multihash",
  "parity-scale-codec",
  "parking_lot 0.12.1",
  "pin-project",

@@ -29,6 +29,8 @@ use libp2p::{
 	Transport,
 };
 use log::debug;
+use multibase::Base;
+use multihash::{Code, Multihash, MultihashDigest};
 use std::{sync::Arc, time::Duration};
 
 use libp2p::multiaddr::Protocol;
@@ -153,8 +155,14 @@ pub fn build_transport<'a>(
 		// TODO: make `cert` an argument
 		let kp = rcgen::KeyPair::generate(&rcgen::PKCS_ECDSA_P256_SHA256).expect("key pair");
 		let cert = RTCCertificate::from_key_pair(kp).expect("certificate");
-		// TODO: transform fingerprint to multibase multihash
-		println!("SHA256 fingerprint {:?}", cert.get_fingerprints().unwrap().first().unwrap());
+		println!(
+			"SHA256 fingerprint {:?}",
+			multibase::encode(
+				Base::Base64Url,
+				fingerprint2multihash(&cert.get_fingerprints().unwrap().first().unwrap().value)
+					.to_bytes(),
+			)
+		);
 		let webrtc_transport = webrtc_p2p::transport::WebRTCTransport::new(cert, keypair);
 		(
 			Transport::map(webrtc_transport.or_transport(transport), |t, _| {
@@ -170,4 +178,10 @@ pub fn build_transport<'a>(
 	} else {
 		(transport.boxed(), bandwidth)
 	}
+}
+
+fn fingerprint2multihash(s: &str) -> Multihash {
+	let mut buf = [0; 32];
+	hex::decode_to_slice(s.replace(':', ""), &mut buf).unwrap();
+	Code::Sha2_256.wrap(&buf).unwrap()
 }
