@@ -149,17 +149,11 @@ pub fn build_transport<'a>(
 		.multiplex(multiplexing_config)
 		.timeout(Duration::from_secs(20));
 
-	if let Some(listen_addr) = webrtc_listen_address {
+	if let Some(_) = webrtc_listen_address {
 		// TODO: make `cert` an argument
 		let kp = rcgen::KeyPair::generate(&rcgen::PKCS_ECDSA_P256_SHA256).expect("key pair");
 		let cert = RTCCertificate::from_key_pair(kp).expect("certificate");
-		let webrtc_transport =
-			futures::executor::block_on(webrtc_p2p::transport::WebRTCTransport::new(
-				cert,
-				keypair,
-				multiaddr_to_socketaddr(&listen_addr).unwrap(),
-			))
-			.unwrap();
+		let webrtc_transport = webrtc_p2p::transport::WebRTCTransport::new(cert, keypair);
 		println!("SHA256 fingerprint {}", webrtc_transport.cert_fingerprint().replace(':', ""));
 		(
 			Transport::map(webrtc_transport.or_transport(transport), |t, _| {
