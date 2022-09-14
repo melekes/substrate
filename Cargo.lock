@@ -3915,7 +3915,7 @@ checksum = "292a948cd991e376cf75541fe5b97a1081d713c618b4f1b9500f8844e49eb565"
 [[package]]
 name = "libp2p"
 version = "0.46.1"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "bytes",
  "futures",
@@ -3959,7 +3959,7 @@ dependencies = [
 [[package]]
 name = "libp2p-autonat"
 version = "0.5.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "async-trait",
  "futures",
@@ -3977,7 +3977,7 @@ dependencies = [
 [[package]]
 name = "libp2p-core"
 version = "0.34.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "asn1_der",
  "bs58",
@@ -4011,7 +4011,7 @@ dependencies = [
 [[package]]
 name = "libp2p-deflate"
 version = "0.34.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "flate2",
  "futures",
@@ -4021,7 +4021,7 @@ dependencies = [
 [[package]]
 name = "libp2p-dns"
 version = "0.34.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "async-std-resolver",
  "futures",
@@ -4035,7 +4035,7 @@ dependencies = [
 [[package]]
 name = "libp2p-floodsub"
 version = "0.37.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "cuckoofilter",
  "fnv",
@@ -4052,7 +4052,7 @@ dependencies = [
 [[package]]
 name = "libp2p-gossipsub"
 version = "0.39.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "asynchronous-codec",
  "base64",
@@ -4079,7 +4079,7 @@ dependencies = [
 [[package]]
 name = "libp2p-identify"
 version = "0.37.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "asynchronous-codec",
  "futures",
@@ -4099,7 +4099,7 @@ dependencies = [
 [[package]]
 name = "libp2p-kad"
 version = "0.38.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "arrayvec 0.7.2",
  "asynchronous-codec",
@@ -4126,7 +4126,7 @@ dependencies = [
 [[package]]
 name = "libp2p-mdns"
 version = "0.38.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "async-io",
  "data-encoding",
@@ -4146,7 +4146,7 @@ dependencies = [
 [[package]]
 name = "libp2p-metrics"
 version = "0.7.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "libp2p-core",
  "libp2p-gossipsub",
@@ -4161,7 +4161,7 @@ dependencies = [
 [[package]]
 name = "libp2p-mplex"
 version = "0.34.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "asynchronous-codec",
  "bytes",
@@ -4178,7 +4178,7 @@ dependencies = [
 [[package]]
 name = "libp2p-noise"
 version = "0.37.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "bytes",
  "curve25519-dalek 3.2.0",
@@ -4199,7 +4199,7 @@ dependencies = [
 [[package]]
 name = "libp2p-ping"
 version = "0.37.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "futures",
  "futures-timer",
@@ -4214,7 +4214,7 @@ dependencies = [
 [[package]]
 name = "libp2p-plaintext"
 version = "0.34.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "asynchronous-codec",
  "bytes",
@@ -4230,7 +4230,7 @@ dependencies = [
 [[package]]
 name = "libp2p-pnet"
 version = "0.22.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "futures",
  "log",
@@ -4243,7 +4243,7 @@ dependencies = [
 [[package]]
 name = "libp2p-relay"
 version = "0.10.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "asynchronous-codec",
  "bytes",
@@ -4268,7 +4268,7 @@ dependencies = [
 [[package]]
 name = "libp2p-rendezvous"
 version = "0.7.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "asynchronous-codec",
  "bimap",
@@ -4290,7 +4290,7 @@ dependencies = [
 [[package]]
 name = "libp2p-request-response"
 version = "0.19.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "async-trait",
  "bytes",
@@ -4307,7 +4307,7 @@ dependencies = [
 [[package]]
 name = "libp2p-swarm"
 version = "0.37.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "either",
  "fnv",
@@ -4326,7 +4326,7 @@ dependencies = [
 [[package]]
 name = "libp2p-swarm-derive"
 version = "0.28.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "quote",
  "syn",
@@ -4335,7 +4335,7 @@ dependencies = [
 [[package]]
 name = "libp2p-tcp"
 version = "0.34.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "async-io",
  "futures",
@@ -4351,7 +4351,7 @@ dependencies = [
 [[package]]
 name = "libp2p-uds"
 version = "0.33.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "async-std",
  "futures",
@@ -4362,7 +4362,7 @@ dependencies = [
 [[package]]
 name = "libp2p-wasm-ext"
 version = "0.34.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "futures",
  "js-sys",
@@ -4375,7 +4375,7 @@ dependencies = [
 [[package]]
 name = "libp2p-webrtc"
 version = "0.1.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "async-trait",
  "bytes",
@@ -4388,6 +4388,7 @@ dependencies = [
  "libp2p-core",
  "libp2p-noise",
  "log",
+ "multibase",
  "multihash",
  "rand 0.8.5",
  "serde",
@@ -4401,7 +4402,7 @@ dependencies = [
 [[package]]
 name = "libp2p-websocket"
 version = "0.36.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "either",
  "futures",
@@ -4419,7 +4420,7 @@ dependencies = [
 [[package]]
 name = "libp2p-yamux"
 version = "0.38.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "futures",
  "libp2p-core",
@@ -4842,7 +4843,7 @@ checksum = "e5ce46fe64a9d73be07dcbe690a38ce1b293be448fd8ce1e6c1b8062c9f72c6a"
 [[package]]
 name = "multistream-select"
 version = "0.11.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "bytes",
  "futures",
@@ -7531,7 +7532,7 @@ dependencies = [
 [[package]]
 name = "prost-codec"
 version = "0.1.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "asynchronous-codec",
  "bytes",
@@ -8159,7 +8160,7 @@ dependencies = [
 [[package]]
 name = "rw-stream-sink"
 version = "0.3.0"
-source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#ebf5cedbe8f1969fb8fadbc4b280b854d3f6538b"
+source = "git+https://github.com/melekes/rust-libp2p.git?branch=anton/webrtc-transport-libp2p-0.46#2c4be62c968326de7ffd944555817fad662ba03f"
 dependencies = [
  "futures",
  "pin-project",
@@ -11715,7 +11716,7 @@ version = "1.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "97fee6b57c6a41524a810daee9286c02d7752c4253064d0b05472833a438f675"
 dependencies = [
- "cfg-if 1.0.0",
+ "cfg-if 0.1.10",
  "digest 0.10.3",
  "rand 0.8.5",
  "static_assertions",
